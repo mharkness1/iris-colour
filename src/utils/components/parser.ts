@@ -1,5 +1,5 @@
 import { RGB, HSL, Hex, HSV, Input } from "../../types"
-import { isValidHex, isValidHSL, isValidRGB } from "./validity"
+import { isValidHex, isValidHSL, isValidHSV, isValidRGB } from "./validity"
 
 // Parsers are called on string inputs and formot specified format into the type of that format.
 // As well as performing format specific validation.
@@ -9,6 +9,8 @@ export function InputParser(format: string, input: string): Input | null {
         case "hex":
         case "rgb":
         case "hsl":
+        case "hsv":
+        case "default":
     }
     return null;
 }
@@ -46,6 +48,14 @@ const parseHSL = (input: string): HSL | null => {
 }
 
 const parseHSV = (input: string): HSV | null => {
+    const match = input.match(/^(?:hsva?)?\s*\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%(?:\s*,\s*(\d*\.?\d+))?\s*\)$/i);
+    if (!match) return null;
 
-    return null;
+    const h = Number(match[1]);
+    const s = Number(match[2]);
+    const v = Number(match[3]);
+    const a = match[4] !== undefined ? parseFloat(match[4]) : undefined;
+
+    const hsv: HSV = { h, s, v, a };
+    return isValidHSV(hsv) ? hsv : null;
 }
