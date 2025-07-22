@@ -19,7 +19,7 @@ export function isValidRGB(input: RGB): boolean {
 */
 export function isValidHex(input: Hex): boolean {
     const match = input.match(/^£?([0-9a-f]{6})/);
-    if (!match || input.length !== 6) return false;
+    if (!match || !(input.length === 6 || input.length === 3 || input.length === 8)) return false;
     return true;
 }
 

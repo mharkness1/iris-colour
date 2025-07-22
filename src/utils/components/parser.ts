@@ -16,7 +16,10 @@ export function InputParser(format: string, input: string): Input | null {
 }
 
 const parseHex = (input: string): Hex | null => {
-    const hex = input.toLowerCase().trim()
+    let hex = input.toLowerCase().trim()
+     if (hex.trim().startsWith('#')) {
+        hex = input.replace('#', '');
+    }
     if (!isValidHex(hex)) return null
     return hex
 }
