@@ -4,13 +4,33 @@ import { isValidHex, isValidHSL, isValidHSV, isValidRGB } from "./validity"
 // Parsers are called on string inputs and formot specified format into the type of that format.
 // As well as performing format specific validation.
 
-export function InputParser(format: string, input: string): Input | null {
+export function InputParser(input: string, format?: string): Input | null {
+    const parsers = [
+        parseHSL,
+        parseHSV,
+        parseRGB,
+        parseHex
+    ]
+    let parsedColour: Input | null;
     switch (format) {
         case "hex":
+            parsedColour = parseHex(input);
+            break;
         case "rgb":
+            parsedColour = parseRGB(input);
+            break;
         case "hsl":
+            parsedColour = parseHSL(input);
+            break;
         case "hsv":
+            parsedColour = parseHSV(input);
+            break;
         case "default":
+            //how would this work with rgb that looks like hsl?
+            for (const parser of parsers) {
+                const result = parser(input)
+                if (result) return result
+            }
     }
     return null;
 }
