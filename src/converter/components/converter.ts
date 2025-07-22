@@ -1,5 +1,4 @@
-import { Hex, HexCode, RGB, HSL } from "../../types";
-import { getLuminanceRGB } from "./helpers";
+import { Hex, HexCode, RGB, HSL, HSV } from "../../types";
 
 //Flow should mean the hex code is all lower case and is already of the correct type having been passed through the parser. But checks included.
 export function hexToRGB(input: Hex | HexCode): RGB | null {
@@ -100,4 +99,43 @@ export function rgbToHex({ r, g, b, a }: RGB): Hex | null {
     }
 
     return `${rHex}${gHex}${bHex}`;
+}
+
+export function rgbToHsv({ r, g, b, a }: RGB): HSV {
+    const rNorm = r / 255;
+    const gNorm = g / 255;
+    const bNorm = b / 255;
+
+    const max = Math.max(rNorm, gNorm, bNorm);
+    const min = Math.min(rNorm, gNorm, bNorm);
+    const delta = max - min;
+
+    let h = 0;
+    let s = 0;
+    const v = max;
+
+    if (delta !== 0) {
+        s = delta / max;
+
+        switch (max) {
+            case rNorm:
+                h = 60 * (((gNorm - bNorm) / delta) % 6);
+                break;
+            case gNorm:
+                h = 60 * (((bNorm - rNorm) / delta) + 2);
+                break;
+            case bNorm:
+                h = 60 * (((rNorm - gNorm) / delta) + 4);
+                break;
+        }
+
+        if (h < 0) h += 360;
+    }
+
+    return {
+        h: Math.round(h),
+        s: Math.round(s * 100),
+        v: Math.round(v * 100),
+        ...(a !== undefined ? { a } : {})
+    };
 }
