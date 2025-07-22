@@ -2,7 +2,7 @@ import { Hex, HexCode, RGB, HSL } from "../../types";
 import { getLuminanceRGB } from "./helpers";
 
 //Flow should mean the hex code is all lower case and is already of the correct type having been passed through the parser. But checks included.
-export function hexToRGB(input: Hex | HexCode, hasAlpha: boolean = false): RGB | null {
+export function hexToRGB(input: Hex | HexCode = false): RGB | null {
     if (typeof input !== 'string') {
         throw new Error('Input must be string, something has gone wrong')
     }
@@ -21,7 +21,7 @@ export function hexToRGB(input: Hex | HexCode, hasAlpha: boolean = false): RGB |
         r = parseInt(hexInput[0] + hexInput[0], 16);
         g = parseInt(hexInput[1] + hexInput[1], 16);
         b = parseInt(hexInput[2] + hexInput[2], 16);
-    } else if (hexInput.length === 4 && hasAlpha === true) {
+    } else if (hexInput.length === 4) {
         r = parseInt(hexInput[0] + hexInput[0], 16);
         g = parseInt(hexInput[1] + hexInput[1], 16);
         b = parseInt(hexInput[2] + hexInput[2], 16);
@@ -30,7 +30,7 @@ export function hexToRGB(input: Hex | HexCode, hasAlpha: boolean = false): RGB |
         r = parseInt(hexInput.slice(0, 2), 16);
         g = parseInt(hexInput.slice(2, 4), 16);
         b = parseInt(hexInput.slice(4, 6), 16);
-    } else if (hexInput.length === 8 && hasAlpha === true) {
+    } else if (hexInput.length === 8) {
         r = parseInt(hexInput.slice(0, 2), 16);
         g = parseInt(hexInput.slice(2, 4), 16);
         b = parseInt(hexInput.slice(4, 6), 16);
@@ -43,7 +43,7 @@ export function hexToRGB(input: Hex | HexCode, hasAlpha: boolean = false): RGB |
     return rgb;
 }
 
-export function rgbToHSL(input: RGB, hasAlpha: boolean = false): HSL | null {
+export function rgbToHSL(input: RGB): HSL | null {
     const { r, g, b, a } = input;
     const rNorm = r / 255;
     const gNorm = r / 255;
@@ -83,6 +83,21 @@ export function rgbToHSL(input: RGB, hasAlpha: boolean = false): HSL | null {
     };
 }
 
-export function rgbToHex(input: RGB, hasAlpha: boolean = false): Hex | null {
-    return null
+export function rgbToHex({ r, g, b, a }: RGB): Hex | null {
+    const toHex = (val: number): string => {
+        const clamped = Math.max(0, Math.min(255, Math.round(val)));
+        return clamped.toString(16).padStart(2, '0');
+    }
+
+    const rHex = toHex(r);
+    const gHex = toHex(g);
+    const bHex = toHex(b);
+
+    if (a !== undefined) {
+        const alpha = Math.max(0, Math.min(1, a));
+        const aHex = toHex(alpha * 255);
+        return `${rHex}${gHex}${bHex}${aHex}`;
+    }
+
+    return `${rHex}${gHex}${bHex}`;
 }
