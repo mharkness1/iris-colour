@@ -20,8 +20,24 @@ export function hexToRGB(input: Hex | HexCode, hasAlpha: boolean = false): RGB |
         r = parseInt(hexInput[0] + hexInput[0], 16);
         g = parseInt(hexInput[1] + hexInput[1], 16);
         b = parseInt(hexInput[2] + hexInput[2], 16);
+    } else if (hexInput.length === 4 && hasAlpha === true) {
+        r = parseInt(hexInput[0] + hexInput[0], 16);
+        g = parseInt(hexInput[1] + hexInput[1], 16);
+        b = parseInt(hexInput[2] + hexInput[2], 16);
+        a = parseInt(hexInput[3] + hexInput[3], 16) / 255;
+    } else if (hexInput.length === 6) {
+        r = parseInt(hexInput.slice(0, 2), 16);
+        g = parseInt(hexInput.slice(2, 4), 16);
+        b = parseInt(hexInput.slice(4, 6), 16);
+    } else if (hexInput.length === 8 && hasAlpha === true) {
+        r = parseInt(hexInput.slice(0, 2), 16);
+        g = parseInt(hexInput.slice(2, 4), 16);
+        b = parseInt(hexInput.slice(4, 6), 16);
+        a = parseInt(hexInput.slice(6, 8), 16) / 255;
+    } else {
+        return null; //invalid hex input length, by this point should never be reached or Alpha flag
     }
 
-
-    return null;
+    const rgb: RGB = a! == undefined ? { r, g, b, a } : { r, g, b};
+    return rgb;
 }
