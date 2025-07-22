@@ -2,7 +2,7 @@ import { Hex, HexCode, RGB, HSL } from "../../types";
 import { getLuminanceRGB } from "./helpers";
 
 //Flow should mean the hex code is all lower case and is already of the correct type having been passed through the parser. But checks included.
-export function hexToRGB(input: Hex | HexCode = false): RGB | null {
+export function hexToRGB(input: Hex | HexCode): RGB | null {
     if (typeof input !== 'string') {
         throw new Error('Input must be string, something has gone wrong')
     }
