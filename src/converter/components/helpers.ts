@@ -27,3 +27,11 @@ export function getContrastRatioColour(color1: Colour, color2: Colour): number {
     const ratio = (lighter + 0.05) / (darker + 0.05);
     return Math.round(ratio * 100) / 100; // rounded to 2 decimal places
 }
+
+/*
+export function invertColour(col: Colour): Colour {
+    const { r, g, b, a } = col.rgb;
+    const returnColour: Colour
+    return new Colour({ r: 255 - r, g: 255 - g, b: 255 - b, a});
+}
+*/
