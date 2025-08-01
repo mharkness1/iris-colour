@@ -35,3 +35,5 @@ export function invertColour(col: Colour): Colour {
     return new Colour({ r: 255 - r, g: 255 - g, b: 255 - b, a});
 }
 */
+
+//TODO: add to grayscale as well as invert
