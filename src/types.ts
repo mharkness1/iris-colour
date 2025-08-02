@@ -38,7 +38,7 @@ export type Hex = string
 export type Input = ColourModes | HexCode | Hex
 
 // Available palette types, implementation dependent - might extend to be their own types with the necessary settings/hyper params
-export type PaletteType = "Tint" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic" | "Custom" | "Sequence"
+export type PaletteType = "Tint" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic" | "Custom" | "Spectrum"
 
 // Basic system type of colour
 export interface Colour {
@@ -55,4 +55,5 @@ export type Palette = {
     colours: Colour[]
     name: string
     type: PaletteType
+    primary: Colour
 }
