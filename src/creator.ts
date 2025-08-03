@@ -28,9 +28,9 @@ export function createColour(input: ColourModes, name: string = 'Unnamed', forma
         throw new Error('Failed to determine correct format');
     }
 
-  const hex = rgbToHex(rgb);
-  const hsl = rgbToHSL(rgb);
-  const hsv = rgbToHSV(rgb);
+  const hex = rgbToHex(rgb) as string;
+  const hsl = rgbToHSL(rgb) as HSL;
+  const hsv = rgbToHSV(rgb) as HSV;
   const luminance = getLuminanceRGB(rgb);
 
   return {
@@ -42,35 +42,3 @@ export function createColour(input: ColourModes, name: string = 'Unnamed', forma
     name,
   };
 }
-
-
-/*
-export function createColour(input: Input, name = 'Unnamed'): Colour {
-  if ('hex' in input) {
-    rgb = hexToRgb(input.hex);
-  } else if ('rgb' in input) {
-    rgb = input.rgb;
-  } else if ('hsl' in input) {
-    rgb = hslToRgb(input.hsl);
-  } else if ('hsv' in input) {
-    rgb = hsvToRgb(input.hsv);
-  } else {
-    throw new Error('Unsupported input color format');
-  }
-
-  const hexCode = rgbToHex(rgb);
-  const hsl = rgbToHsl(rgb);
-  const hsv = rgbToHsv(rgb);
-  const luminance = getLuminance(rgb);
-
-  return {
-    hexCode,
-    hex: hexCode,
-    rgb,
-    hsl,
-    hsv,
-    luminance,
-    name,
-  };
-}
-*/
