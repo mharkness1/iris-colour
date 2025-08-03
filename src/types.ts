@@ -26,23 +26,16 @@ export type HSV = {
 }
 
 // Potential colour input types - arrive as strings and sent to the parser
-export type ColourModes = RGB | HSL | HSV 
-
-// Hexcode acceptance as haven't decided how to handle that yet
-export type HexCode = `#${string}`
+export type ColourModes = RGB | HSL | HSV | Hex
 
 // Hex as string for completeness of type
 export type Hex = string
-
-// All available potential input types including hexcode
-export type Input = ColourModes | HexCode | Hex
 
 // Available palette types, implementation dependent - might extend to be their own types with the necessary settings/hyper params
 export type PaletteType = "Tint" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic" | "Custom" | "Spectrum"
 
 // Basic system type of colour
 export interface Colour {
-    hexCode: HexCode
     hex: string
     rgb: RGB
     hsl: HSL

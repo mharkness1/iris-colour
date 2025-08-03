@@ -1,7 +1,7 @@
-import { Hex, HexCode, RGB, HSL, HSV } from "../../types";
+import { Hex, RGB, HSL, HSV } from "../../types";
 
 //Flow should mean the hex code is all lower case and is already of the correct type having been passed through the parser. But checks included.
-export function hexToRGB(input: Hex | HexCode): RGB | null {
+export function hexToRGB(input: Hex): RGB {
     if (typeof input !== 'string') {
         throw new Error('Input must be string, something has gone wrong')
     }
@@ -35,7 +35,7 @@ export function hexToRGB(input: Hex | HexCode): RGB | null {
         b = parseInt(hexInput.slice(4, 6), 16);
         a = parseInt(hexInput.slice(6, 8), 16) / 255;
     } else {
-        return null; //invalid hex input length, by this point should never be reached or Alpha flag
+        throw new Error('Hex of invalid length'); //invalid hex input length, by this point should never be reached or Alpha flag
     }
 
     const rgb: RGB = a! == undefined ? { r, g, b, a } : { r, g, b};
@@ -101,7 +101,7 @@ export function rgbToHex({ r, g, b, a }: RGB): Hex | null {
     return `${rHex}${gHex}${bHex}`;
 }
 
-export function rgbToHsv({ r, g, b, a }: RGB): HSV {
+export function rgbToHSV({ r, g, b, a }: RGB): HSV {
     const rNorm = r / 255;
     const gNorm = g / 255;
     const bNorm = b / 255;
@@ -138,4 +138,22 @@ export function rgbToHsv({ r, g, b, a }: RGB): HSV {
         v: Math.round(v * 100),
         ...(a !== undefined ? { a } : {})
     };
+}
+
+export function hslToRGB({ h, s, l, a}: HSL): RGB {
+    return {
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 1,
+    }
+}
+
+export function hsvToRGB({ h, s, v, a}: HSV): RGB {
+        return {
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 1,
+    }
 }

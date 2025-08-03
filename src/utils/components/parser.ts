@@ -1,17 +1,17 @@
-import { RGB, HSL, Hex, HSV, Input } from "../../types"
+import { RGB, HSL, Hex, HSV, ColourModes, Colour } from "../../types"
 import { isValidHex, isValidHSL, isValidHSV, isValidRGB } from "./validity"
 
 // Parsers are called on string inputs and formot specified format into the type of that format.
 // As well as performing format specific validation.
 
-export function InputParser(input: string, format?: string): Input | null {
+export function InputParser(input: string, format?: string): ColourModes | null {
     const parsers = [
         parseHSL,
         parseHSV,
         parseRGB,
         parseHex
     ]
-    let parsedColour: Input | null;
+    let parsedColour: ColourModes | null;
     switch (format) {
         case "hex":
             parsedColour = parseHex(input);
