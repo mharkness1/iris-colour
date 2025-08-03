@@ -5,29 +5,26 @@ import { hexToRGB, rgbToHSL, rgbToHSV, rgbToHex, hslToRGB, hsvToRGB } from "./co
 // function works by guaranteeing the existence of RGB and then converting from that.
 export function createColour(input: ColourModes, name: string = 'Unnamed', format?: string): Colour | null {
     let rgb: RGB;
-    // Handle HEX strings (with or without format hint)
     if (typeof input === 'string' || format?.toLowerCase() === 'hex') {
         try {
             rgb = hexToRGB(input as Hex);
         } catch {
-            return null;
+            throw new Error('Input of type string given as input not valid hex');
         }
     }
-
-  // Handle inferred object type (RGB, HSL, HSV)
-  else if (typeof input === 'object') {
-    if ('r' in input && 'g' in input && 'b' in input) {
-      rgb = input;
-    } else if ('h' in input && 's' in input && 'l' in input) {
-      rgb = hslToRgb(input);
-    } else if ('h' in input && 's' in input && 'v' in input) {
-      rgb = hsvToRgb(input);
+    else if (typeof input === 'object') {
+        if (('r' in input && 'g' in input && 'b' in input) || format?.toLowerCase() === 'rgb') {
+            rgb = input as RGB;
+        } else if (('h' in input && 's' in input && 'l' in input) || format?.toLowerCase() === 'hsl') {
+            rgb = hslToRGB(input as HSL);
+        } else if (('h' in input && 's' in input && 'v' in input) || format?.toLowerCase() === 'hsv') {
+            rgb = hsvToRGB(input as HSV);
+        } else {
+            throw new Error('Object of unrecognised type was provided');
+        }
     } else {
-      return null;
+        throw new Error('Failed to determine correct format');
     }
-  } else {
-    throw new Error('Failed to determine correct format');
-  }
 
   const hex = rgbToHex(rgb);
   const hsl = rgbToHsl(rgb);
