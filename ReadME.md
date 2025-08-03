@@ -16,6 +16,7 @@ To the best of my knowledge this colour library does something that others do no
 - fixed colour/palette-type generators e.g., monotone, tints, triadic, analagous, complementary
 - colour creator factory!! IMPORTANT
 - add two more converter functions MOST IMPORTANT
+- remove null options from converters IMPORTANT
 
 ## Extensions
 - generic palette definitions

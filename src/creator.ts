@@ -1,10 +1,12 @@
 import { Colour, ColourModes, RGB, HSL, HSV, Hex } from "./types";
 import { hexToRGB, rgbToHSL, rgbToHSV, rgbToHex, hslToRGB, hsvToRGB } from "./converter/components/converter";
+import { getLuminanceRGB } from "./converter/components/helpers";
 
 
 // function works by guaranteeing the existence of RGB and then converting from that.
 export function createColour(input: ColourModes, name: string = 'Unnamed', format?: string): Colour | null {
     let rgb: RGB;
+
     if (typeof input === 'string' || format?.toLowerCase() === 'hex') {
         try {
             rgb = hexToRGB(input as Hex);
@@ -27,9 +29,9 @@ export function createColour(input: ColourModes, name: string = 'Unnamed', forma
     }
 
   const hex = rgbToHex(rgb);
-  const hsl = rgbToHsl(rgb);
-  const hsv = rgbToHsv(rgb);
-  const luminance = getLuminance(rgb);
+  const hsl = rgbToHSL(rgb);
+  const hsv = rgbToHSV(rgb);
+  const luminance = getLuminanceRGB(rgb);
 
   return {
     hex,
