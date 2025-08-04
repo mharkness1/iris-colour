@@ -5,3 +5,4 @@ export const defaultLightnessSaturationStepSize: number = 10;
 export const defaultSpectrumSize: number = 6;
 export const defaultAnalagousAngle: number = 30;
 export const defaultHueStepSize: number = 60;
+export const defaultMaxPaletteSize: number = 6;

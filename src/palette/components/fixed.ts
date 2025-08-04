@@ -2,9 +2,9 @@ import { createColour } from "../../creator";
 import { Colour, Palette } from "../../types";
 import { defaultAnalagousAngle } from "./defaultConsts";
 
-// All of these palettes generate based solely on varying the hue generally according to a fixed amount (except analagous)
+// All of these palettes are generated of a fixed size i.e., complementary is 1, triadic is 2 new colours etc.
 
-export function genComplement(col: Colour): Colour {
+export function genComplement(col: Colour): Palette {
     let { h, s, l, a } = col.hsl;
     
     const complementHue = (h + 180) % 360;
@@ -16,7 +16,12 @@ export function genComplement(col: Colour): Colour {
         throw new Error('Failed to generate complement');
     }
 
-    return complement
+    return {
+        name: name,
+        type: "Complementary",
+        primary: col,
+        colours: [col, complement],
+    };
 }
 
 export function genTriadicPalette(col: Colour): Palette {
