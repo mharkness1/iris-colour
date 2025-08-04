@@ -1,7 +1,6 @@
 import { createColour } from "../../creator";
 import { Colour, Palette } from "../../types";
-import { defaultStepSize } from "./defaultConsts";
-// Triadic, quartic, analagous, etc.
+import { defaultAnalagousAngle } from "./defaultConsts";
 
 export function genComplement(col: Colour): Colour {
     let { h, s, l, a } = col.hsl;
@@ -42,7 +41,7 @@ export function genTriadicPalette(col: Colour): Palette {
     return palette
 }
 
-export function genAnalagousPalette(col: Colour, angle: number = 30): Palette {
+export function genAnalagousPalette(col: Colour, angle: number = defaultAnalagousAngle): Palette {
     if (angle < 10 || angle >= 90) {
         throw new Error('Provided angle does not meet requirements: greater than 10 and less than or equal to 90')
     }
@@ -66,7 +65,7 @@ export function genAnalagousPalette(col: Colour, angle: number = 30): Palette {
         primary: col,
         colours: [colour2, col, colour1],
     };
-    
+
     return palette
 }
 
