@@ -3,7 +3,7 @@ import { Colour, Palette } from "../../types";
 import { defaultStepSize } from "./defaultConsts";
 // Triadic, quartic, analagous, etc.
 
-export function genComplementPalette(col: Colour): Colour {
+export function genComplement(col: Colour): Colour {
     let { h, s, l, a } = col.hsl;
     
     const complementHue = (h + 180) % 360;
