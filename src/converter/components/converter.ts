@@ -42,7 +42,7 @@ export function hexToRGB(input: Hex): RGB {
     return rgb;
 }
 
-export function rgbToHSL(input: RGB): HSL | null {
+export function rgbToHSL(input: RGB): HSL {
     const { r, g, b, a } = input;
     const rNorm = r / 255;
     const gNorm = r / 255;
@@ -82,7 +82,7 @@ export function rgbToHSL(input: RGB): HSL | null {
     };
 }
 
-export function rgbToHex({ r, g, b, a }: RGB): Hex | null {
+export function rgbToHex({ r, g, b, a }: RGB): Hex {
     const toHex = (val: number): string => {
         const clamped = Math.max(0, Math.min(255, Math.round(val)));
         return clamped.toString(16).padStart(2, '0');
@@ -141,19 +141,65 @@ export function rgbToHSV({ r, g, b, a }: RGB): HSV {
 }
 
 export function hslToRGB({ h, s, l, a}: HSL): RGB {
-    return {
-        r: 0,
-        g: 0,
-        b: 0,
-        a: 1,
+    s /= 100;
+    l /= 100;
+
+    const c = (1 - Math.abs(2 * l - 1)) * s;
+    const hPrime = h / 60;
+    const x = c * (1 - Math.abs((hPrime % 2) - 1));
+
+    let r = 0, g = 0, b = 0;
+
+    if (0 <= hPrime && hPrime < 1) [r, g, b] = [c, x, 0];
+    else if (1 <= hPrime && hPrime < 2) [r, g, b] = [x, c, 0];
+    else if (2 <= hPrime && hPrime < 3) [r, g, b] = [0, c, x];
+    else if (3 <= hPrime && hPrime < 4) [r, g, b] = [0, x, c];
+    else if (4 <= hPrime && hPrime < 5) [r, g, b] = [x, 0, c];
+    else if (5 <= hPrime && hPrime < 6) [r, g, b] = [c, 0, x];
+
+    const m = l - c / 2;
+
+    const rgb: RGB = {
+        r: Math.round((r + m) * 255),
+        g: Math.round((g + m) * 255),
+        b: Math.round((b + m) * 255),
+    };
+
+    if (a !== undefined) {
+        rgb.a = a;
     }
+
+    return rgb;
 }
 
 export function hsvToRGB({ h, s, v, a}: HSV): RGB {
-        return {
-        r: 0,
-        g: 0,
-        b: 0,
-        a: 1,
+    s /= 100;
+    v /= 100;
+
+    const c = v * s;
+    const hPrime = h / 60;
+    const x = c * (1 - Math.abs((hPrime % 2) - 1));
+
+    let r = 0, g = 0, b = 0;
+
+    if (0 <= hPrime && hPrime < 1) [r, g, b] = [c, x, 0];
+    else if (1 <= hPrime && hPrime < 2) [r, g, b] = [x, c, 0];
+    else if (2 <= hPrime && hPrime < 3) [r, g, b] = [0, c, x];
+    else if (3 <= hPrime && hPrime < 4) [r, g, b] = [0, x, c];
+    else if (4 <= hPrime && hPrime < 5) [r, g, b] = [x, 0, c];
+    else if (5 <= hPrime && hPrime < 6) [r, g, b] = [c, 0, x];
+
+    const m = v - c;
+
+    const rgb: RGB = {
+        r: Math.round((r + m) * 255),
+        g: Math.round((g + m) * 255),
+        b: Math.round((b + m) * 255),
+    };
+
+    if (a !== undefined) {
+        rgb.a = a;
     }
+
+    return rgb;
 }
