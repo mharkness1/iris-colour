@@ -22,4 +22,6 @@ export function genQuadraticPalette(col: Colour): Palette | null {
     return null
 }
 
-export type PaletteType = "Tint" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic" | "Custom" | "Spectrum"
+
+
+//export type PaletteType = "Tint" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic"

@@ -37,4 +37,4 @@ export function invertColour(col: Colour): Colour {
     return inverted
 }
 
-//TODO: add to grayscale as well as invert
+//TODO: add to grayscale

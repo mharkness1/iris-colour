@@ -11,7 +11,7 @@ export function InputParser(input: string, format?: string): ColourModes | null 
         parseRGB,
         parseHex
     ]
-    let parsedColour: ColourModes | null;
+    let parsedColour: ColourModes | null = null;
     switch (format) {
         case "hex":
             parsedColour = parseHex(input);
@@ -32,7 +32,7 @@ export function InputParser(input: string, format?: string): ColourModes | null 
                 if (result) return result
             }
     }
-    return null;
+    return parsedColour;
 }
 
 const parseHex = (input: string): Hex | null => {
