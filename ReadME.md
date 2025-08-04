@@ -13,11 +13,12 @@ To the best of my knowledge this colour library does something that others do no
 - add two more converter functions MOST IMPORTANT
 - colour creator factory!! IMPORTANT
 - added inversion
+- added complement
 
 ## To Do
 - grayscale - requires factory function
 - more sophisticated constrast checker
-- fixed colour/palette-type generators e.g., monotone, tints, triadic, analagous, complementary
+- fixed colour/palette-type generators e.g., monotone, tints, triadic, analagous
 
 ## Extensions
 - generic palette definitions

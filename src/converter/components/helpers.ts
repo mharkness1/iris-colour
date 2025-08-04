@@ -32,8 +32,13 @@ export function getContrastRatioColour(color1: Colour, color2: Colour): number {
 
 export function invertColour(col: Colour): Colour {
     let { r, g, b, a } = col.rgb
-    const name = col.name + '-inverted'
+    const name = `${col.name}-inverted`
     let inverted: Colour = createColour({r: 255 - r, g: 255 - g, b: 255 - b, a}, name, 'rgb')
+
+    if (!inverted) {
+        throw new Error('Failed to generate inverted colour')
+    }
+
     return inverted
 }
 
