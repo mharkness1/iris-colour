@@ -2,6 +2,8 @@ import { createColour } from "../../creator";
 import { Colour, Palette } from "../../types";
 import { defaultAnalagousAngle } from "./defaultConsts";
 
+// All of these palettes generate based solely on varying the hue generally according to a fixed amount (except analagous)
+
 export function genComplement(col: Colour): Colour {
     let { h, s, l, a } = col.hsl;
     
@@ -117,7 +119,3 @@ export function genQuadraticPalette(col: Colour): Palette {
 
     return palette
 }
-
-
-
-//export type PaletteType = "Tint" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic"

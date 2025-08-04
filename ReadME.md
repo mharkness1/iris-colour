@@ -19,6 +19,7 @@ To the best of my knowledge this colour library does something that others do no
 - grayscale - requires factory function
 - more sophisticated constrast checker
 - fixed colour/palette-type generators e.g., monotone, tints, triadic, analagous
+- update white/black/gray tolerance to be consistent i.e., 100 - x where necessary
 
 ## Extensions
 - generic palette definitions

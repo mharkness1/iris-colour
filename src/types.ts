@@ -32,7 +32,7 @@ export type ColourModes = RGB | HSL | HSV | Hex
 export type Hex = string
 
 // Available palette types, implementation dependent - might extend to be their own types with the necessary settings/hyper params
-export type PaletteType = "Tint" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic" | "Custom" | "Spectrum" | "Quadratic"
+export type PaletteType = "Tints" | "Shades" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic" | "Custom" | "Spectrum" | "Quadratic"
 
 // Basic system type of colour
 export interface Colour {
