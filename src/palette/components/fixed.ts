@@ -45,10 +45,9 @@ export function genAnalagousPalette(col: Colour, angle: number = defaultAnalagou
     if (angle < 10 || angle >= 90) {
         throw new Error('Provided angle does not meet requirements: greater than 10 and less than or equal to 90')
     }
-    
+
     const { h, s, l, a } = col.hsl;
-    const name = `${col.name}-analagous`;
-    
+
     const hue1 = (h + angle) % 360;
     const hue2 = (h - angle + 360) % 360;
 
@@ -69,12 +68,54 @@ export function genAnalagousPalette(col: Colour, angle: number = defaultAnalagou
     return palette
 }
 
-export function genTetradicPalette(col: Colour): Palette | null {
-    return null
+export function genTetradicPalette(col: Colour): Palette {
+    const { h, s, l, a } = col.hsl;
+
+    const h1 = (h + 60) % 360;
+    const h2 = (h + 180) % 360;
+    const h3 = (h + 240) % 360;
+
+    const c1 = createColour({ h: h1, s, l, a }, `${col.name}-tetra-1`, 'hsl');
+    const c2 = createColour({ h: h2, s, l, a }, `${col.name}-tetra-2`, 'hsl');
+    const c3 = createColour({ h: h3, s, l, a }, `${col.name}-tetra-3`, 'hsl');
+
+    if (!c1 || !c2 || !c3) {
+        throw new Error('Failed to create tetradic palette')
+    }
+
+    const palette: Palette = {
+        name: `${col.name}-tetradic`,
+        type: 'Tetradic',
+        primary: col,
+        colours: [col, c1, c2, c3],
+    };
+
+    return palette
 }
 
-export function genQuadraticPalette(col: Colour): Palette | null {
-    return null
+export function genQuadraticPalette(col: Colour): Palette {
+    const { h, s, l, a } = col.hsl;
+
+    const h1 = (h + 90) % 360;
+    const h2 = (h + 180) % 360;
+    const h3 = (h + 270) % 360;
+
+    const c1 = createColour({ h: h1, s, l, a }, `${col.name}-quad-1`, 'hsl');
+    const c2 = createColour({ h: h2, s, l, a }, `${col.name}-quad-2`, 'hsl');
+    const c3 = createColour({ h: h3, s, l, a }, `${col.name}-quad-3`, 'hsl');
+
+    if (!c1 || !c2 || !c3) {
+        throw new Error('Failed to create quadratic palette')
+    }
+
+    const palette: Palette = {
+        name: `${col.name}-quadratic`,
+        type: 'Quadratic',
+        primary: col,
+        colours: [col, c1, c2, c3],
+    };
+
+    return palette
 }
 
 
