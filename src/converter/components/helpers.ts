@@ -1,3 +1,4 @@
+import { createColour } from "../../creator";
 import { Colour, RGB } from "../../types";
 
 
@@ -29,10 +30,11 @@ export function getContrastRatioColour(color1: Colour, color2: Colour): number {
 }
 
 
-export function invertColour(col: Colour): Colour | null {
-    const { r, g, b, a } = col.rgb;
-    // need factory function to create interface object
-    return null
+export function invertColour(col: Colour): Colour {
+    let { r, g, b, a } = col.rgb
+    const name = col.name + '-inverted'
+    let inverted: Colour = createColour({r: 255 - r, g: 255 - g, b: 255 - b, a}, name, 'rgb')
+    return inverted
 }
 
 //TODO: add to grayscale as well as invert

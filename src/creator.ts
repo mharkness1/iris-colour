@@ -3,8 +3,8 @@ import { hexToRGB, rgbToHSL, rgbToHSV, rgbToHex, hslToRGB, hsvToRGB } from "./co
 import { getLuminanceRGB } from "./converter/components/helpers";
 
 
-// function works by guaranteeing the existence of RGB and then converting from that.
-export function createColour(input: ColourModes, name: string = 'Unnamed', format?: string): Colour | null {
+// function works by guaranteeing the existence of RGB and then converting from that. Input needs to be parsed to type before invoking this.
+export function createColour(input: ColourModes, name: string = 'Unnamed', format?: string): Colour {
     let rgb: RGB;
 
     if (typeof input === 'string' || format?.toLowerCase() === 'hex') {
