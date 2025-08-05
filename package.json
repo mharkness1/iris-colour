@@ -4,15 +4,15 @@
   "description": "",
   "exports": {
     ".": {
-     "default": "./dist/index.js",
-     "types": "./dist/index.d.ts"
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
     "./dist"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "clean": "rimraf ./dist",
     "build": "npm run clean && tsc -p ./tsconfig.production.json && tsc-alias -p ./tsconfig.production.json"
   },
@@ -20,7 +20,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.5",
     "rimraf": "^6.0.1",
+    "ts-jest": "^29.4.1",
     "tsc-alias": "^1.8.16",
     "typescript": "^5.8.3"
   },

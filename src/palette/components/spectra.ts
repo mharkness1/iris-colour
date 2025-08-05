@@ -1,7 +1,6 @@
 import { Colour, Palette } from "../../types";
 import { createColour } from "../../creator";
 import { defaultBlendFactor, defaultMaxPaletteSize } from "./defaultConsts";
-import { UNDERSCORE_NOT_FOUND_ROUTE } from "../../../../../../../node_modules/next/dist/shared/lib/constants";
 
 // Takes in two or three ordered colours and fills in the gap.
 
