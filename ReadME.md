@@ -21,7 +21,6 @@ To the best of my knowledge this colour library does something that others do no
 - grayscale - requires factory function
 
 ## To Do
-- more sophisticated constrast checker
 
 ## Extensions
-- generic palette definitions
+- custom palette definitions
