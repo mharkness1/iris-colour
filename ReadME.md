@@ -14,13 +14,13 @@ To the best of my knowledge this colour library does something that others do no
 - colour creator factory!! IMPORTANT
 - added inversion
 - added complement
+- implement max palette size logic
 
 ## To Do
 - grayscale - requires factory function
 - more sophisticated constrast checker
 - fixed colour/palette-type generators e.g., monotone, tints, triadic, analagous
 - update white/black/gray tolerance to be consistent i.e., 100 - x where necessary
-- implement max palette size logic
 
 ## Extensions
 - generic palette definitions

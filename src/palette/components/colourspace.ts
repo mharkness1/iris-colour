@@ -1,6 +1,6 @@
 import { createColour } from "../../creator";
 import { Colour, Palette } from "../../types"
-import { defaultBlackTolerance, defaultGrayTolerance, defaultLightnessSaturationStepSize, defaultWhiteTolerance } from "./defaultConsts";
+import { defaultBlackTolerance, defaultGrayTolerance, defaultLightnessSaturationStepSize, defaultMaxPaletteSize, defaultWhiteTolerance } from "./defaultConsts";
 
 export function genMonotonousPalette(col: Colour): Palette | null {
     return null
@@ -10,7 +10,8 @@ export function genTints(
     col: Colour,
     stepSize: number = defaultLightnessSaturationStepSize,
     blackTolerance: number = defaultBlackTolerance,
-    whiteTolerance: number = defaultWhiteTolerance
+    whiteTolerance: number = defaultWhiteTolerance,
+    maxSize: number = defaultMaxPaletteSize, 
 ): Palette {
     let { h, s, l, a } = col.hsl;
     const name = `${col.name}-tint`;
@@ -23,6 +24,7 @@ export function genTints(
     for (let i = l + stepSize; i < whiteTolerance; i+=stepSize) {
         const tint = createColour({ h, s, l: i, a }, `${name}-${steps.length + 1}`, 'hsl');
         if (tint) steps.push(tint);
+        if (steps.length >= maxSize) break;
     }
 
     return {
@@ -37,7 +39,8 @@ export function genShades(
     col: Colour,
     stepSize: number = defaultLightnessSaturationStepSize,
     blackTolerance: number = defaultBlackTolerance,
-    whiteTolerance: number = defaultWhiteTolerance
+    whiteTolerance: number = defaultWhiteTolerance,
+    maxSize: number = defaultMaxPaletteSize
 ): Palette {
     let { h, s, l, a } = col.hsl;
     const name = `${col.name}-shade`;
@@ -50,6 +53,7 @@ export function genShades(
     for (let i = l - stepSize; i >= blackTolerance; i-=stepSize) {
         const shade = createColour({ h, s, l: i, a }, `${name}-${steps.length + 1}`, 'hsl');
         if (shade) steps.push(shade);
+        if (steps.length >= maxSize) break;
     }
 
     return {
@@ -64,6 +68,7 @@ export function genTones(
     col: Colour,
     stepSize: number = defaultLightnessSaturationStepSize,
     grayTolerance: number = defaultGrayTolerance,
+    maxSize: number = defaultMaxPaletteSize,
 ): Palette {
     let { h, s, l, a } = col.hsl;
     const name = `${col.name}-tone`;
@@ -76,6 +81,7 @@ export function genTones(
     for (let i = l + stepSize; i >= grayTolerance; i+=stepSize) {
         const tint = createColour({ h, s, l: i, a }, `${name}-${steps.length + 1}`, 'hsl');
         if (tint) steps.push(tint);
+        if (steps.length >= maxSize) break;
     }
 
     return {
