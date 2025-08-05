@@ -4,7 +4,6 @@ import { defaultBlackTolerance, defaultGrayTolerance, defaultLightnessSaturation
 
 export function genMonochromePalette(
     col: Colour,
-    stepSize: number = defaultLightnessSaturationStepSize,
     blackTolerance: number = defaultBlackTolerance,
     whiteTolerance: number = defaultWhiteTolerance,
     grayTolerance: number = defaultGrayTolerance,
@@ -54,7 +53,7 @@ export function genTints(
     };
 
     let steps: Colour[] = [];
-    for (let i = l + stepSize; i < whiteTolerance; i+=stepSize) {
+    for (let i = l + stepSize; i < 100 - whiteTolerance; i+=stepSize) {
         const tint = createColour({ h, s, l: i, a }, `${name}-${steps.length + 1}`, 'hsl');
         if (tint) steps.push(tint);
         if (steps.length >= maxSize) break;
