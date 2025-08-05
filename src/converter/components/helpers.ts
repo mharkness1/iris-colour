@@ -42,4 +42,14 @@ export function invertColour(col: Colour): Colour {
     return inverted
 }
 
-//TODO: add to grayscale
+export function toGrayscale(col: Colour): Colour {
+    const { l, a } = col.hsl;
+    const grayscaleHSL = {
+        h: 0,
+        s: 0,
+        l,
+        a,
+    };
+    const name = `${col.name}-grayscale`;
+    return createColour(grayscaleHSL, name, 'hsl')
+}
