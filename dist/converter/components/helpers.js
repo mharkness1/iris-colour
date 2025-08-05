@@ -1,3 +1,4 @@
+import { createColour } from "../../creator.js";
 export function getLuminanceRGB({ r, g, b }) {
     // Normalize RGB to [0, 1]
     const toLinear = (subCol) => {
@@ -18,11 +19,23 @@ export function getContrastRatioColour(color1, color2) {
     const ratio = (lighter + 0.05) / (darker + 0.05);
     return Math.round(ratio * 100) / 100; // rounded to 2 decimal places
 }
-/*
-export function invertColour(col: Colour): Colour {
-    const { r, g, b, a } = col.rgb;
-    const returnColour: Colour
-    return new Colour({ r: 255 - r, g: 255 - g, b: 255 - b, a});
+export function invertColour(col) {
+    let { r, g, b, a } = col.rgb;
+    const name = `${col.name}-inverted`;
+    let inverted = createColour({ r: 255 - r, g: 255 - g, b: 255 - b, a }, name, 'rgb');
+    if (!inverted) {
+        throw new Error('Failed to generate inverted colour');
+    }
+    return inverted;
 }
-*/
-//TODO: add to grayscale as well as invert
+export function toGrayscale(col) {
+    const { l, a } = col.hsl;
+    const grayscaleHSL = {
+        h: 0,
+        s: 0,
+        l,
+        a,
+    };
+    const name = `${col.name}-grayscale`;
+    return createColour(grayscaleHSL, name, 'hsl');
+}

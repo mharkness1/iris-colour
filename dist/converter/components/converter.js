@@ -37,7 +37,7 @@ export function hexToRGB(input) {
         a = parseInt(hexInput.slice(6, 8), 16) / 255;
     }
     else {
-        return null; //invalid hex input length, by this point should never be reached or Alpha flag
+        throw new Error('Hex of invalid length'); //invalid hex input length, by this point should never be reached or Alpha flag
     }
     const rgb = a == undefined ? { r, g, b, a } : { r, g, b };
     return rgb;
@@ -91,7 +91,7 @@ export function rgbToHex({ r, g, b, a }) {
     }
     return `${rHex}${gHex}${bHex}`;
 }
-export function rgbToHsv({ r, g, b, a }) {
+export function rgbToHSV({ r, g, b, a }) {
     const rNorm = r / 255;
     const gNorm = g / 255;
     const bNorm = b / 255;
@@ -123,4 +123,64 @@ export function rgbToHsv({ r, g, b, a }) {
         v: Math.round(v * 100),
         ...(a !== undefined ? { a } : {})
     };
+}
+export function hslToRGB({ h, s, l, a }) {
+    s /= 100;
+    l /= 100;
+    const c = (1 - Math.abs(2 * l - 1)) * s;
+    const hPrime = h / 60;
+    const x = c * (1 - Math.abs((hPrime % 2) - 1));
+    let r = 0, g = 0, b = 0;
+    if (0 <= hPrime && hPrime < 1)
+        [r, g, b] = [c, x, 0];
+    else if (1 <= hPrime && hPrime < 2)
+        [r, g, b] = [x, c, 0];
+    else if (2 <= hPrime && hPrime < 3)
+        [r, g, b] = [0, c, x];
+    else if (3 <= hPrime && hPrime < 4)
+        [r, g, b] = [0, x, c];
+    else if (4 <= hPrime && hPrime < 5)
+        [r, g, b] = [x, 0, c];
+    else if (5 <= hPrime && hPrime < 6)
+        [r, g, b] = [c, 0, x];
+    const m = l - c / 2;
+    const rgb = {
+        r: Math.round((r + m) * 255),
+        g: Math.round((g + m) * 255),
+        b: Math.round((b + m) * 255),
+    };
+    if (a !== undefined) {
+        rgb.a = a;
+    }
+    return rgb;
+}
+export function hsvToRGB({ h, s, v, a }) {
+    s /= 100;
+    v /= 100;
+    const c = v * s;
+    const hPrime = h / 60;
+    const x = c * (1 - Math.abs((hPrime % 2) - 1));
+    let r = 0, g = 0, b = 0;
+    if (0 <= hPrime && hPrime < 1)
+        [r, g, b] = [c, x, 0];
+    else if (1 <= hPrime && hPrime < 2)
+        [r, g, b] = [x, c, 0];
+    else if (2 <= hPrime && hPrime < 3)
+        [r, g, b] = [0, c, x];
+    else if (3 <= hPrime && hPrime < 4)
+        [r, g, b] = [0, x, c];
+    else if (4 <= hPrime && hPrime < 5)
+        [r, g, b] = [x, 0, c];
+    else if (5 <= hPrime && hPrime < 6)
+        [r, g, b] = [c, 0, x];
+    const m = v - c;
+    const rgb = {
+        r: Math.round((r + m) * 255),
+        g: Math.round((g + m) * 255),
+        b: Math.round((b + m) * 255),
+    };
+    if (a !== undefined) {
+        rgb.a = a;
+    }
+    return rgb;
 }

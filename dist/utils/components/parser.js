@@ -8,7 +8,7 @@ export function InputParser(input, format) {
         parseRGB,
         parseHex
     ];
-    let parsedColour;
+    let parsedColour = null;
     switch (format) {
         case "hex":
             parsedColour = parseHex(input);
@@ -23,14 +23,14 @@ export function InputParser(input, format) {
             parsedColour = parseHSV(input);
             break;
         case "default":
-            //how would this work with rgb that looks like hsl?
+            //how would this work with rgb that looks like hsl? It will default to the order of parsers in the array. Only one return.
             for (const parser of parsers) {
                 const result = parser(input);
                 if (result)
                     return result;
             }
     }
-    return null;
+    return parsedColour;
 }
 const parseHex = (input) => {
     let hex = input.toLowerCase().trim();

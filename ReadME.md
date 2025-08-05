@@ -22,6 +22,8 @@ To the best of my knowledge this colour library does something that others do no
 - grayscale - requires factory function
 
 ## To Do
+- additional spectrum options i.e., 3 and 4 colours
+- additional palettes - complementary colours, mixed stuff.
 
 ## Extensions
 - custom palette definitions

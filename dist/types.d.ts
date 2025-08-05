@@ -16,13 +16,10 @@ export type HSV = {
     v: number;
     a?: number;
 };
-export type ColourModes = RGB | HSL | HSV;
-export type HexCode = `#${string}`;
+export type ColourModes = RGB | HSL | HSV | Hex;
 export type Hex = string;
-export type Input = ColourModes | HexCode | Hex;
-export type PaletteType = "Tint" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic" | "Custom" | "Sequence";
+export type PaletteType = "Tints" | "Shades" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic" | "Custom" | "Spectrum" | "Quadratic";
 export interface Colour {
-    hexCode: HexCode;
     hex: string;
     rgb: RGB;
     hsl: HSL;
@@ -34,4 +31,5 @@ export type Palette = {
     colours: Colour[];
     name: string;
     type: PaletteType;
+    primary: Colour;
 };

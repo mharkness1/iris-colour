@@ -1,2 +1,2 @@
-import { Input } from "../../types.js";
-export declare function InputParser(input: string, format?: string): Input | null;
+import { ColourModes } from "../../types.js";
+export declare function InputParser(input: string, format?: string): ColourModes | null;
