@@ -45,7 +45,7 @@ export function hexToRGB(input: Hex): RGB {
 export function rgbToHSL(input: RGB): HSL {
     const { r, g, b, a } = input;
     const rNorm = r / 255;
-    const gNorm = r / 255;
+    const gNorm = g / 255;
     const bNorm = b / 255;
 
     const max = Math.max(rNorm, gNorm, bNorm);
@@ -158,11 +158,12 @@ export function hslToRGB({ h, s, l, a}: HSL): RGB {
     else if (5 <= hPrime && hPrime < 6) [r, g, b] = [c, 0, x];
 
     const m = l - c / 2;
+    const clamp255 = (v: number) => Math.max(0, Math.min(255, Math.round(v * 255)));
 
     const rgb: RGB = {
-        r: Math.round((r + m) * 255),
-        g: Math.round((g + m) * 255),
-        b: Math.round((b + m) * 255),
+        r: clamp255(r + m),
+        g: clamp255(g + m),
+        b: clamp255(b + m),
     };
 
     if (a !== undefined) {
@@ -173,6 +174,7 @@ export function hslToRGB({ h, s, l, a}: HSL): RGB {
 }
 
 export function hsvToRGB({ h, s, v, a}: HSV): RGB {
+    h = ((h % 360) + 360) % 360;
     s /= 100;
     v /= 100;
 

@@ -27,3 +27,4 @@ To the best of my knowledge this colour library does something that others do no
 
 ## Extensions
 - custom palette definitions
+- prune, iterate over a palette given some given colour and remove colours that fail contrast/accessibility checks?
