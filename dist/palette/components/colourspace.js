@@ -5,16 +5,12 @@ export function genMonochromePalette(col, blackTolerance = defaultBlackTolerance
     const name = `${col.name}-monochrome`;
     const colours = [];
     const lightnessRange = [blackTolerance, 100 - whiteTolerance];
-    const stepSizeL = (lightnessRange[1] - lightnessRange[0]) / maxSize;
+    const stepSizeL = (lightnessRange[1] - lightnessRange[0]) / (maxSize - 1);
     const saturationRange = [grayTolerance, 100];
-    const stepSizeS = (saturationRange[1] - saturationRange[0]) / maxSize;
-    for (let i = 1; i <= maxSize; i++) {
+    const stepSizeS = (saturationRange[1] - saturationRange[0]) / (maxSize - 1);
+    for (let i = 0; i <= maxSize; i++) {
         const newL = Math.max(0, Math.min(100, blackTolerance + (stepSizeL * i)));
         const newS = Math.max(0, Math.min(100, grayTolerance + (stepSizeS * i)));
-        if (newL === l && newS === s) {
-            colours.push(col);
-        }
-        ;
         const mono = createColour({ h, s: newS, l: newL, a }, `${name}-${i}`, 'hsl');
         if (mono)
             colours.push(mono);
@@ -51,8 +47,8 @@ export function genTints(col, stepSize = defaultLightnessSaturationStepSize, bla
 export function genShades(col, stepSize = defaultLightnessSaturationStepSize, blackTolerance = defaultBlackTolerance, whiteTolerance = defaultWhiteTolerance, maxSize = defaultMaxPaletteSize) {
     let { h, s, l, a } = col.hsl;
     const name = `${col.name}-shade`;
-    if (l > whiteTolerance) {
-        l = whiteTolerance;
+    if (l > 100 - whiteTolerance) {
+        l = 100 - whiteTolerance;
     }
     ;
     let steps = [];
@@ -67,29 +63,38 @@ export function genShades(col, stepSize = defaultLightnessSaturationStepSize, bl
         name,
         type: "Shades",
         primary: col,
-        colours: [col, ...steps],
+        colours: [...steps, col],
     };
 }
 export function genTones(col, stepSize = defaultLightnessSaturationStepSize, grayTolerance = defaultGrayTolerance, maxSize = defaultMaxPaletteSize) {
-    let { h, s, l, a } = col.hsl;
+    const { h, s: originalS, l, a } = col.hsl;
     const name = `${col.name}-tone`;
-    if (s < grayTolerance) {
-        s = grayTolerance;
-    }
-    ;
-    let steps = [];
-    for (let i = s - stepSize; i >= grayTolerance; i -= stepSize) {
-        const tone = createColour({ h, s: i, l, a }, `${name}-${steps.length + 1}`, 'hsl');
+    // Clamp the starting saturation
+    const s = Math.max(grayTolerance, Math.min(100, originalS));
+    const tones = [];
+    // Step downward
+    for (let i = s; i >= grayTolerance; i -= stepSize) {
+        const tone = createColour({ h, s: i, l, a }, `${name}-s${i}`, 'hsl');
         if (tone)
-            steps.push(tone);
-        if (steps.length >= maxSize)
+            tones.push(tone);
+        if (tones.length >= maxSize)
             break;
     }
+    // Step upward
+    for (let i = s + stepSize; i <= 100; i += stepSize) {
+        if (tones.length >= maxSize)
+            break;
+        const tone = createColour({ h, s: i, l, a }, `${name}-s${i}`, 'hsl');
+        if (tone)
+            tones.push(tone);
+    }
+    // Sort by saturation so original color appears in the correct place
+    tones.sort((a, b) => (a.hsl.s - b.hsl.s));
     return {
         name,
         type: "Tones",
         primary: col,
-        colours: [col, ...steps],
+        colours: tones.slice(0, maxSize),
     };
 }
 /* "Tint" | "Tones" | "Monochrome"
