@@ -88,7 +88,7 @@ export function genShades(
         name,
         type: "Shades",
         primary: col,
-        colours: [...steps, col],
+        colours: [col, ...steps],
     };
 }
 
