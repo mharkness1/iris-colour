@@ -55,7 +55,7 @@ npm install iris-colour@latest
 
 ## Functionality
 ### Utilities
-1. Parsers
+#### 1. Parsers
 
 Each colour mode has a corresponding parser function, it takes a string and return a conforming object of the relevant type e.g., ```parseRBG(input: string)```. They work by matching relevant regex statements and check the validity of the value range.
 
@@ -73,11 +73,11 @@ There also exists a general parser. It takes a string and an optional format inp
 
 **NOTE: in some cases inputs may satisfy the requirements of two modes e.g., 50, 50, 50 will satisfy both rgb and hsl requirements. In these cases the order of precedence is as follows: Hex, RGB, HSL, HSV.**
 
-2. Validity Checkers
+#### 2. Validity Checkers
 
 Each colour mode has a corresponding validity check, it takes an object of the specific type and checks it for the correct values e.g., ```isValidHex(input: Hex)``` checks using ```/^#?([0-9a-f]{6})/``` i.e., an optional # and at least 6 characters from the digits 0-9 or letters a-f (lowercase only, which is done automatically by the parser). And ```isValidHSL(input: HSL)``` checks that the object has h, s, l, a? (implicity necessary), that the alpha if defined is between 0 and 1 (inclusive of 1), that h is between 0 and 360 (inclusive), and that s, l are between 0 and 100 (inclusive).
 
-3. Converters
+#### 3. Converters
 
 The library contains the following converters:
 - Hex to RGB
@@ -89,13 +89,13 @@ The library contains the following converters:
 
 With these 6 converter functions of the form lowercasemodeToUPPERCASEMODE e.g., ```hexToRGB()``` allow users to convert, potentially via a chain, from one format to any other supported format.
 
-4. HTML/CSS Integration
+#### 4. HTML/CSS Integration
 
 The function ```toCssString(col: colour)``` takes an object of the Colour type and returns the rgb string form compatible with CSS i.e., rgb(100, 100, 100) (supports alpha inclusion).
 
 So it can be utilised directly in browser. In a react component I've used: ```const cssColour = toCssString(colour)``` and ```style={{background: cssColour}}``` as an example.
 
-5. Accessibility
+#### 5. Accessibility
 
 - Luminance
 
@@ -112,7 +112,7 @@ The luminance value is used to calculate the contrast ratio between two colours.
 The exposed function ```isAccessible(foreground: Colour, background: Colour, level: "AA" | "AAA" = "AA", largeText: boolean = false)``` returns a true/false value reflecting whether, given the parameters the accepted WCAG accessibility standard is complied with.
 
 ### Colour Management
-1. Colour Extensions - inversion and grayscale
+#### 1. Colour Extensions - inversion and grayscale
 
 - Inversion
 
@@ -122,7 +122,7 @@ The exposed function ```isAccessible(foreground: Colour, background: Colour, lev
 
 ```toGrayscale(col: Colour)``` takes a colour and returns the grayscale equivalent i.e., just the lightness component of its HSL representation.
 
-2. Factory
+#### 2. Factory
 
 To create a colour object easily use: ```createColour(input: ColourModes, name: string = 'Unnamed', format?: string)``` This is a flexible factory function. It checks whether the input is a string (or if the format is "hex") and whether it meets the expected format. Or whether the input is an object with the attributes expected of RGB, HSL, or HSV.
 
