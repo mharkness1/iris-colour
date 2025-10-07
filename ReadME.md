@@ -149,17 +149,50 @@ The palette generation element of the library has two key elements: shared param
 | MaxPaletteSize | Maximum number of colours returned | 6 | Monochrome, Tints, Shades, Tones |
 | BlendFactor | How far between two colours an intermediary is generated | 0.5 | N/A |
 
+It is worth checking specific implementations as of *v1.1.1* the priority is given to tolerance values not size. Meaning palettes will vary in size depending on the initial colour as they return whenever the tolerance is reached.
+
 **NOTE: BlendFactor and HueStepSize are not currently implemented directly**
 
 #### Palettes
 
+There are ten supported palettes currently. They are:
+
+**Colour Spaces**
+1. Monochome ```genMonochromePalette(col: Colour ...params)``` — returns a palette (without primary) of the same hue varied over lightness and saturation.
+
+2. Tints ```genTints(col: Colour ...params)``` - returns a palette (with primary at start) of the lightness increased until the white tolerance (*note: if col's lightness is below black tolerance, it is automatically increased to black tolerance v1.1.1*)
+
+3. Shades ```genShades(col: Colour ...params)``` - returns a palette (with primary at start) of the lightness decreasing until the black tolerance (*note: if col's lightness is above white tolerance, it is automatically decreased to white tolerance v1.1.1*)
+
+4. Tones ```genTones(col: Colour ...params)``` - returns a palette (with primary in sorted location) of the saturation varied according to step size excluding until grayTolerance
+
+**Fixed**
+5. Complement ```genComplement(col: Colour)``` - returns a palette (with primary at start) of primary and it's complement
+
+6. Triadic ```genTriadicPalette(col: Colour)``` - return a palette (with primary at start) of its triadic colors (hue varied by 120 each direction)
+
+7. Analagous ```genAnalagousPalette(col: Colour ...param)``` - returns a palette (with primary second) of its analagous colours i.e., hue varied according to the param on either side
+
+8. Tetradic ```genTetradicPalette(col: Colour)``` - returns a palette (with primary first) of its tetradic colours i.e., hue varied by 60, 180, 240
+
+9. Quadratic ```genQuadraticPalette(col: Colour)``` - return a palette (with primary first) of its quadratic colours i.e., hue varied by 90, 180, 270
+
+**Spectrum**
+10. Spectrum ```genSpectrumPalette(col1: Colour, col2: Colour ...params)``` - returns a palette (with col1 first and col2 last) of the colours between the two of them varied over hue, saturation, and lightness.
+
 ### Additional Features
-- Name
+
+The name property is supported for colours. Currently this only allows for manual extraction/checking - names of generated colours are automatically generated. It is worth checking the code to see the names they take e.g., "Colour1"'s complement will be given the name "Colour1-complement" etc.
 
 ## Future Versions
+- Potential rethink re:value boundaries
 - Additional spectrum options i.e., 3 and 4 colours.
 - Additional palettes - complementary colours splits, custom hsl transformations.
 - Custom palette definitions.
 - Prune, iterate over a palette given some given colour and remove colours that fail contrast/accessibility checks.
 
 ## Support 
+
+Please use pull requests to suggest improvements or additional features (I've some ideas listed above). Or to help. Or, in fact I'm happy to receive, constructive criticism of my implementation.
+
+I made this for myself, both to learn and for a separate project (which ended up needed a Golang version anyway!) but if you find it valueable you can monetarily contribute to its ongoing development here: [Buy me a coffee](https://buymeacoffee.com/mharkness)
