@@ -77,13 +77,25 @@ There also exists a general parser. It takes a string and an optional format inp
 
 Each colour mode has a corresponding validity check, it takes an object of the specific type and checks it for the correct values e.g., ```isValidHex(input: Hex)``` checks using ```/^#?([0-9a-f]{6})/``` i.e., an optional # and at least 6 characters from the digits 0-9 or letters a-f (lowercase only, which is done automatically by the parser). And ```isValidHSL(input: HSL)``` checks that the object has h, s, l, a? (implicity necessary), that the alpha if defined is between 0 and 1 (inclusive of 1), that h is between 0 and 360 (inclusive), and that s, l are between 0 and 100 (inclusive).
 
-3. HTML/CSS Integration
+3. Converters
+
+The library contains the following converters:
+- Hex to RGB
+- RGB to Hex
+- RGB to HSL
+- RGB to HSV
+- HSL to RGB
+- HSV to RGB
+
+With these 6 converter functions of the form lowercasemodeToUPPERCASEMODE e.g., ```hexToRGB()``` allow users to convert, potentially via a chain, from one format to any other supported format.
+
+4. HTML/CSS Integration
 
 The function ```toCssString(col: colour)``` takes an object of the Colour type and returns the rgb string form compatible with CSS i.e., rgb(100, 100, 100) (supports alpha inclusion).
 
 So it can be utilised directly in browser. In a react component I've used: ```const cssColour = toCssString(colour)``` and ```style={{background: cssColour}}``` as an example.
 
-4. Accessibility
+5. Accessibility
 
 - Luminance
 
@@ -101,12 +113,44 @@ The exposed function ```isAccessible(foreground: Colour, background: Colour, lev
 
 ### Colour Management
 1. Colour Extensions - inversion and grayscale
+
+- Inversion
+
+```invertColour(col: Colour)``` takes a colour and returns the 'inversion' i.e., r: 255 - r, g: 255 - g, b: 255 - b.
+
+- Grayscale
+
+```toGrayscale(col: Colour)``` takes a colour and returns the grayscale equivalent i.e., just the lightness component of its HSL representation.
+
 2. Factory
-3. Contrast
+
+To create a colour object easily use: ```createColour(input: ColourModes, name: string = 'Unnamed', format?: string)``` This is a flexible factory function. It checks whether the input is a string (or if the format is "hex") and whether it meets the expected format. Or whether the input is an object with the attributes expected of RGB, HSL, or HSV.
+
+**NOTE: generally it is wise to parse an input, which checks both validity and type.**
+
+The function then populates a colour object with the necessary properties (it does this by first guaranteeing the existence of the RGB property) and returns that colour object.
 
 
 ### Palettes
+
+The palette generation element of the library has two key elements: shared parameters, and the palette generation functions themselves. All palette generation occurs with HSL primarily.
+
 #### Constants
+
+| Name | Description | Default Value | Palettes |
+| --- | --- | --- | --- |
+| GrayTolerance | Minimum saturation that can be reached | 10 | Monochrome, Tones |
+| BlackTolerance | Minimum lightness that can be reached | 10 | Monochrome, Tints, Shades |
+| WhiteTolerance | Maximum lightness that can be reached | 10 | Monochrome, Tints, Shades |
+| LightnessSaturationStepSize | Amount lightness and saturation change each step | 10 | Tints, Shades, Tones |
+| SpectrumSize | Number of intermediary colours | 6 | Spectrum |
+| AnalagousAngle | Variation of hue for analagous colours | 30 | Analagous |
+| HueStepSize | Amount hue changes each step | 60 | N/A |
+| MaxPaletteSize | Maximum number of colours returned | 6 | Monochrome, Tints, Shades, Tones |
+| BlendFactor | How far between two colours an intermediary is generated | 0.5 | N/A |
+
+**NOTE: BlendFactor and HueStepSize are not currently implemented directly**
+
 #### Palettes
 
 ### Additional Features

@@ -1,6 +1,6 @@
 import { Colour, Palette } from "../../types";
 import { createColour } from "../../creator";
-import { defaultBlendFactor, defaultMaxPaletteSize } from "./defaultConsts";
+import { defaultBlendFactor, defaultSpectrumSize } from "./defaultConsts";
 
 // Takes in two or three ordered colours and fills in the gap.
 
@@ -37,7 +37,7 @@ export function blendColours(
 export function genSpectrumPalette(
     col1: Colour,
     col2: Colour,
-    steps: number = defaultMaxPaletteSize,
+    steps: number = defaultSpectrumSize,
     name: string = `${col1.name}-${col2.name}-spectrum`
 ): Palette {
     const colours: Colour[] = [];
