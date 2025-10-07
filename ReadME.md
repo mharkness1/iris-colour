@@ -21,7 +21,7 @@ interface Colour {
 }
 ```
 
-with the various colour components defined in turn, all colour formats allow for an additional alpha channel, although currently this isn't utilised by the library logic. **Currently only RGB, HSL, HSV, Hex colour modes are supported**. For example:
+with the various colour components defined in turn, all colour formats allow for an additional alpha channel, although currently this isn't utilised by the library logic. **NOTE: currently only RGB, HSL, HSV, Hex colour modes are supported**. For example:
 
 ```typescript
 type RGB = {
@@ -45,7 +45,7 @@ type Palette = {
 
 Where primary is the colour that generated the palette, in most instances the primary will also be returned within the colours array care should be taken to filter, skip, or remove this colour by matching any of its more primative properties. Currently ```PaletteType``` is the union of string values taking any of: ```"Tints" | "Shades" | "Tones" | "Monochrome" | "Triadic" | "Analagous" | "Complementary" | "Tetradic" | "Custom" | "Spectrum" | "Quadratic"```
 
-**Note: "Custom" is currently not supported.**
+**NOTE: "Custom" is currently not supported.**
 
 ## Installation
 
@@ -67,7 +67,7 @@ These are designed to be as flexible as possible. For instance the RGB parser ma
 - (100,200,100)
 - (100 200 100)
 
-*I've found this flexibility useful in binding it to custom front-end inputs, however, it does mean that one must be careful about what is being used as an imput string
+*I've found this flexibility useful in binding it to custom front-end inputs, however, it does mean that one must be careful about what is being used as an imput string.*
 
 There also exists a general parser. It takes a string and an optional format input: ```InputParser(input: string, format?: string)``` and returns the relevant object. Where the optional format input takes the case insensitive form of "hex", "rgb", "hsl", "hsv". If no format is supplied then it iterates through possibilities and return the first valid object.
 
@@ -75,11 +75,29 @@ There also exists a general parser. It takes a string and an optional format inp
 
 2. Validity Checkers
 
-Each colour mode has a corresponding validity check, it takes an object of the specific type and checks it for the correct values e.g., ```isValidHex(input: Hex)```.
+Each colour mode has a corresponding validity check, it takes an object of the specific type and checks it for the correct values e.g., ```isValidHex(input: Hex)``` checks using ```/^#?([0-9a-f]{6})/``` i.e., an optional # and at least 6 characters from the digits 0-9 or letters a-f (lowercase only, which is done automatically by the parser). And ```isValidHSL(input: HSL)``` checks that the object has h, s, l, a? (implicity necessary), that the alpha if defined is between 0 and 1 (inclusive of 1), that h is between 0 and 360 (inclusive), and that s, l are between 0 and 100 (inclusive).
 
 3. HTML/CSS Integration
+
+The function ```toCssString(col: colour)``` takes an object of the Colour type and returns the rgb string form compatible with CSS i.e., rgb(100, 100, 100) (supports alpha inclusion).
+
+So it can be utilised directly in browser. In a react component I've used: ```const cssColour = toCssString(colour)``` and ```style={{background: cssColour}}``` as an example.
+
 4. Accessibility
 
+- Luminance
+
+By construction colour objects have a luminance value calculated with the exposed function ```getLuminanceRGB({ r, g, b }: RGB)``` which returns the relative luminance calculated as per WCAG. This can be directly utilised to determine overlay text colour e.g., ```const useWhite = (colour.luminance < 0.3 )``` combined with ```style={{ color: useWhite ? "#ffffff" : "#000000" }}``` 
+
+**NOTE: to use white overlay the generally suggested value for luminance is 0.179**
+
+- Contrast Ratio
+
+The luminance value is used to calculate the contrast ratio between two colours. The exposed function ```getContrastRatioColour(colour1: Colour, colour2: Colour)``` return the contrast ratio as a number.
+
+- Accessibility
+
+The exposed function ```isAccessible(foreground: Colour, background: Colour, level: "AA" | "AAA" = "AA", largeText: boolean = false)``` returns a true/false value reflecting whether, given the parameters the accepted WCAG accessibility standard is complied with.
 
 ### Colour Management
 1. Colour Extensions - inversion and grayscale
@@ -91,6 +109,8 @@ Each colour mode has a corresponding validity check, it takes an object of the s
 #### Constants
 #### Palettes
 
+### Additional Features
+- Name
 
 ## Future Versions
 - Additional spectrum options i.e., 3 and 4 colours.
