@@ -12,7 +12,7 @@ export function InputParser(input: string, format?: string): ColourModes | null 
         parseHex
     ]
     let parsedColour: ColourModes | null = null;
-    switch (format) {
+    switch (format?.toLowerCase()) {
         case "hex":
             parsedColour = parseHex(input);
             break;
