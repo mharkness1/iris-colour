@@ -144,7 +144,7 @@ The palette generation element of the library has two key elements: shared param
 | WhiteTolerance | Maximum lightness that can be reached | 10 | Monochrome, Tints, Shades |
 | LightnessSaturationStepSize | Amount lightness and saturation change each step | 10 | Tints, Shades, Tones |
 | SpectrumSize | Number of intermediary colours | 6 | Spectrum |
-| AnalagousAngle | Variation of hue for analagous colours | 30 | Analagous |
+| AnalogousAngle | Variation of hue for analogous colours | 30 | Analogous |
 | HueStepSize | Amount hue changes each step | 60 | N/A |
 | MaxPaletteSize | Maximum number of colours returned | 6 | Monochrome, Tints, Shades, Tones |
 | BlendFactor | How far between two colours an intermediary is generated | 0.5 | N/A |
@@ -171,7 +171,7 @@ There are ten supported palettes currently. They are:
 
 6. Triadic ```genTriadicPalette(col: Colour)``` - return a palette (with primary at start) of its triadic colors (hue varied by 120 each direction)
 
-7. Analagous ```genAnalagousPalette(col: Colour ...param)``` - returns a palette (with primary second) of its analagous colours i.e., hue varied according to the param on either side
+7. Analogous ```genAnalogousPalette(col: Colour ...param)``` - returns a palette (with primary second) of its analogous colours i.e., hue varied according to the param on either side
 
 8. Tetradic ```genTetradicPalette(col: Colour)``` - returns a palette (with primary first) of its tetradic colours i.e., hue varied by 60, 180, 240
 
