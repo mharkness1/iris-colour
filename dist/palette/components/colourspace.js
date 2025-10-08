@@ -63,7 +63,7 @@ export function genShades(col, stepSize = defaultLightnessSaturationStepSize, bl
         name,
         type: "Shades",
         primary: col,
-        colours: [...steps, col],
+        colours: [col, ...steps],
     };
 }
 export function genTones(col, stepSize = defaultLightnessSaturationStepSize, grayTolerance = defaultGrayTolerance, maxSize = defaultMaxPaletteSize) {

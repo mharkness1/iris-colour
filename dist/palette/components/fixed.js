@@ -35,7 +35,7 @@ export function genTriadicPalette(col) {
     return palette;
 }
 export function genAnalagousPalette(col, angle = defaultAnalagousAngle) {
-    if (angle < 10 || angle >= 90) {
+    if (angle < 10 || angle > 90) {
         throw new Error('Provided angle does not meet requirements: greater than 10 and less than or equal to 90');
     }
     const { h, s, l, a } = col.hsl;

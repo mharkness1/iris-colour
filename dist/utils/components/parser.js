@@ -9,7 +9,7 @@ export function InputParser(input, format) {
         parseHex
     ];
     let parsedColour = null;
-    switch (format) {
+    switch (format?.toLowerCase()) {
         case "hex":
             parsedColour = parseHex(input);
             break;

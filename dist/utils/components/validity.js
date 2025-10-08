@@ -16,7 +16,7 @@ export function isValidRGB(input) {
     * that each character is from the set of 0-9 and a-f (disregarding the case of the letter values)
 */
 export function isValidHex(input) {
-    const match = input.match(/^£?([0-9a-f]{6})/);
+    const match = input.match(/^#?([0-9a-f]{6})/);
     if (!match || !(input.length === 6 || input.length === 3 || input.length === 8))
         return false;
     return true;

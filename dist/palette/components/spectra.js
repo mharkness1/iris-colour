@@ -1,5 +1,5 @@
 import { createColour } from "../../creator.js";
-import { defaultBlendFactor, defaultMaxPaletteSize } from "./defaultConsts.js";
+import { defaultBlendFactor, defaultSpectrumSize } from "./defaultConsts.js";
 // Takes in two or three ordered colours and fills in the gap.
 export function blendColours(col1, col2, blendFactor = defaultBlendFactor, inputName = "Blended") {
     const t = Math.max(0, Math.min(1, blendFactor));
@@ -20,7 +20,7 @@ export function blendColours(col1, col2, blendFactor = defaultBlendFactor, input
     const blended = createColour({ r, g, b, a }, inputName, "rgb");
     return blended;
 }
-export function genSpectrumPalette(col1, col2, steps = defaultMaxPaletteSize, name = `${col1.name}-${col2.name}-spectrum`) {
+export function genSpectrumPalette(col1, col2, steps = defaultSpectrumSize, name = `${col1.name}-${col2.name}-spectrum`) {
     const colours = [];
     for (let i = 0; i <= steps + 1; i++) {
         const t = i / (steps + 1);
