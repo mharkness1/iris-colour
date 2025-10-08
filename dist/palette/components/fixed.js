@@ -1,5 +1,5 @@
 import { createColour } from "../../creator.js";
-import { defaultAnalagousAngle } from "./defaultConsts.js";
+import { defaultAnalogousAngle } from "./defaultConsts.js";
 // All of these palettes are generated of a fixed size i.e., complementary is 1, triadic is 2 new colours etc.
 export function genComplement(col) {
     let { h, s, l, a } = col.hsl;
@@ -34,7 +34,7 @@ export function genTriadicPalette(col) {
     };
     return palette;
 }
-export function genAnalagousPalette(col, angle = defaultAnalagousAngle) {
+export function genAnalogousPalette(col, angle = defaultAnalogousAngle) {
     if (angle < 10 || angle > 90) {
         throw new Error('Provided angle does not meet requirements: greater than 10 and less than or equal to 90');
     }

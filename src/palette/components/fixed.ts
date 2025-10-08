@@ -1,6 +1,6 @@
 import { createColour } from "../../creator";
 import { Colour, Palette } from "../../types";
-import { defaultAnalagousAngle } from "./defaultConsts";
+import { defaultAnalogousAngle } from "./defaultConsts";
 
 // All of these palettes are generated of a fixed size i.e., complementary is 1, triadic is 2 new colours etc.
 
@@ -48,7 +48,7 @@ export function genTriadicPalette(col: Colour): Palette {
     return palette
 }
 
-export function genAnalagousPalette(col: Colour, angle: number = defaultAnalagousAngle): Palette {
+export function genAnalogousPalette(col: Colour, angle: number = defaultAnalogousAngle): Palette {
     if (angle < 10 || angle > 90) {
         throw new Error('Provided angle does not meet requirements: greater than 10 and less than or equal to 90')
     }

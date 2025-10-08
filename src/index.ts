@@ -26,7 +26,7 @@ export {
     genShades,
     genTints,
     genTones,
-    genAnalagousPalette,
+    genAnalogousPalette,
     genComplement,
     genQuadraticPalette,
     genTetradicPalette,
